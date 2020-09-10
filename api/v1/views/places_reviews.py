@@ -9,10 +9,6 @@ from flask import jsonify, abort, request
 def resource_bad_request(e):
     return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
-@app_views.errorhandler(404)
-def resource_not_found(e):
-    return jsonify({'error': str(e).replace('404 Not FOund: ', '')}), 404
-
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'], strict_slashes=False)
 def reviews(place_id):
     """ Count the whole information in the database
@@ -45,7 +41,7 @@ def reviews(place_id):
                     break
             print(checkuser, checkplace)
             if not checkuser or not checkplace:
-                abort(404, "not found ")
+                abort(404)
             dictionary = Review(**content)
             dictionary.save()
             # dictionary.save()

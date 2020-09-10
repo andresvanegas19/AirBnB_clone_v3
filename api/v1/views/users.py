@@ -47,7 +47,7 @@ def get_user_by_id(user_id):
         if result:
             result.delete()
             storage.save()
-            return jsonify({})
+            return jsonify({}), 200
     if request.method == 'PUT':
         contents = request.get_json(silent=True)
         result = storage.get(User, user_id)
@@ -65,7 +65,7 @@ def get_user_by_id(user_id):
                 if key not in('id', 'created_at', 'updated_at'):
                     setattr(result, key, value)
             storage.save()
-            return jsonify(result.to_dict()), 201
+            return jsonify(result.to_dict()), 200
         else:
             abort(400, "Not a JSON")
     abort(400)
