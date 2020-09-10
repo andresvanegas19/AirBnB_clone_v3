@@ -32,7 +32,6 @@ def get_users():
             return jsonify(dictionary.to_dict()), 201
         else:
             abort(400, "Not a JSON")
-    abort(400)
             # abort(400, description="fails cause yes")
 
 @app_views.route('/users/<string:user_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -55,6 +54,12 @@ def get_user_by_id(user_id):
         if not result:
             abort(404)
         if type(contents) == dict:
+            # is for valid if the pass is a json
+            if 'password' not in contents.keys():
+                abort(400, "Missing password")
+            if 'email' not in contents.keys():
+                abort(400, "Missing email")
+            print(result)
             dictionary = result.to_dict()
             for key, value in contents.items():
                 if key not in('id', 'created_at', 'updated_at'):
@@ -64,3 +69,4 @@ def get_user_by_id(user_id):
         else:
             abort(400, "Not a JSON")
     abort(400)
+                
