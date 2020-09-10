@@ -7,6 +7,7 @@ from flask import jsonify, abort, request
 
 @app_views.errorhandler(400)
 def resource_not_found(e):
+    """ put the erro about 400 """
     return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
@@ -29,7 +30,7 @@ def get_users():
             dictionary = User(**content)
             dictionary.save()
             # dictionary.save()
-            return jsonify(dictionary.to_dict()), 201
+            return jsonify(dictionary.to_dict())
         else:
             abort(400, "Not a JSON")
             # abort(400, description="fails cause yes")
@@ -47,7 +48,7 @@ def get_user_by_id(user_id):
         if result:
             result.delete()
             storage.save()
-            return jsonify({}), 200
+            return jsonify({})
     if request.method == 'PUT':
         contents = request.get_json(silent=True)
         result = storage.get(User, user_id)
@@ -65,7 +66,7 @@ def get_user_by_id(user_id):
                 if key not in('id', 'created_at', 'updated_at'):
                     setattr(result, key, value)
             storage.save()
-            return jsonify(result.to_dict()), 200
+            return jsonify(result.to_dict())
         else:
             abort(400, "Not a JSON")
     abort(400)
