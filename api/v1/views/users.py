@@ -10,6 +10,7 @@ from flask import jsonify, abort, request
 def resource_not_found(e):
     return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
+
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def get_users():
     """ Count the whole information in the database
@@ -38,7 +39,7 @@ def get_users():
 
 
 @app_views.route('/users/<string:user_id>', methods=['GET', 'PUT', 'DELETE'],
-                 , strict_slashes=False)
+                 strict_slashes=False)
 def get_user_by_id(user_id):
     """ Extract the class of certain class delete
     the object and update the new object"""
