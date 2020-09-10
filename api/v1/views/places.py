@@ -10,9 +10,6 @@ from flask import jsonify, abort, request
 def resource_bad_request(e):
     return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
-@app_views.errorhandler(404)
-def resource_not_found(e):
-    return jsonify({'error': str(e).replace('404 Not FOund: ', '')}), 404
 
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'], strict_slashes=False)
 def get_places(city_id):
@@ -26,7 +23,6 @@ def get_places(city_id):
                 result.append(value.to_dict())
         return jsonify(result), 201
     elif request.method == 'POST':
-        print("entre al post")
         content = request.get_json(silent=True)
         if type(content) == dict:
             # is for valid if the pass is a json
@@ -46,7 +42,7 @@ def get_places(city_id):
                     break
             print(checkuser, checkcity)
             if not checkuser or not checkcity:
-                abort(404, "not found ")
+                abort(404)
             dictionary = Place(**content)
             dictionary.save()
             # dictionary.save()
@@ -60,7 +56,6 @@ def place_by_id(place_id):
     """ get with id , delete the object and update the new object"""
     print(place_id)
     if request.method == 'GET':
-        print("entre al get")
         result = storage.get(Place, place_id)
         if result:
             return jsonify(result.to_dict())
@@ -73,7 +68,6 @@ def place_by_id(place_id):
     elif request.method == 'PUT':
         contents = request.get_json(silent=True)
         result = storage.get(Place, place_id)
-
         if not result:
             abort(404)
         if type(contents) == dict:

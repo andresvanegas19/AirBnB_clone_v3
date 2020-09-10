@@ -8,12 +8,7 @@ from flask import jsonify, abort, request
 
 @app_views.errorhandler(400)
 def resource_not_found(e):
-    """ display an error of the """
-    return jsonify(
-        {
-            'error': str(e).replace('400 Bad Request: ', '')
-        }), 400
-
+    return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def get_users():
