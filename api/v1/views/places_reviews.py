@@ -52,34 +52,30 @@ def reviews(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def reviews_by_id(review_id):
-    """ get with id , delete the object and update the new object"""
-    print(review_id)
+    """ Count the whole information in the database
+    with the newly added count()"""
+    result = storage.get(Review, review_id)
+    if not result:
+        abort(404)
+
     if request.method == 'GET':
-        print("entre al get")
-        result = storage.get(Review, review_id)
-        if result:
-            return jsonify(result.to_dict())
-        else:
-            abort(404)
-    elif request.method == 'DELETE':
-        result = storage.get(Review, review_id)
+        return jsonify(result.to_dict())
+
+    if request.method == 'DELETE':
         if result:
             result.delete()
             storage.save()
             return jsonify({})
-    elif request.method == 'PUT':
+
+    if request.method == 'PUT':
         contents = request.get_json(silent=True)
-        result = storage.get(Review, review_id)
-        if not result:
-            abort(404)
-        if type(contents) == dict:
-            dictionary = result.to_dict()
-            for key, value in contents.items():
-                if key not in ('id', 'user_id', 'place_id','created_at', 'updated_at'):
-                    setattr(result, key, value)
-            storage.save()
-            return jsonify(result.to_dict()), 200
-        else:
+        if not request.json:
             abort(400, "Not a JSON")
-            # abort(400, description="fails cause yes")
-    abort(404)
+
+        for key, value in contents.items():
+            if key not in ('id', 'user_id','place_id','created_at', 'updated_at'):
+                setattr(result, key, value)
+
+        storage.save()
+        return jsonify(result.to_dict()), 200
+

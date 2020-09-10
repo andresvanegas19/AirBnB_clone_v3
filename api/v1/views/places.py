@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+B#!/usr/bin/python3
 """ Script to route the request """
 from api.v1.views import app_views
 from models.place import Place
@@ -53,31 +53,29 @@ def get_places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def place_by_id(place_id):             
-    """ get with id , delete the object and update the new object"""
-    print(place_id)
+    """ Count the whole information in the database
+    with the newly added count()"""
+    result = storage.get(Place, place_id)
+    if not result:
+        abort(404)
+
     if request.method == 'GET':
-        result = storage.get(Place, place_id)
-        if result:
-            return jsonify(result.to_dict())
-    elif request.method == 'DELETE':
-        result = storage.get(Place, place_id)
+        return jsonify(result.to_dict())
+
+    if request.method == 'DELETE':
         if result:
             result.delete()
             storage.save()
             return jsonify({})
-    elif request.method == 'PUT':
+
+    if request.method == 'PUT':
         contents = request.get_json(silent=True)
-        result = storage.get(Place, place_id)
-        if not result:
-            abort(404)
-        if type(contents) == dict:
-            dictionary = result.to_dict()
-            for key, value in contents.items():
-                if key not in ('id', 'user_id', 'city_id','created_at', 'updated_at'):
-                    setattr(result, key, value)
-            storage.save()
-            return jsonify(result.to_dict()), 201
-        else:
+        if not request.json:
             abort(400, "Not a JSON")
-            # abort(400, description="fails cause yes")
-    abort(404)
+
+        for key, value in contents.items():
+            if key not in ('id', 'user_id', 'city_id','created_at', 'updated_at'):
+                setattr(result, key, value)
+
+        storage.save()
+        return jsonify(result.to_dict()), 200
