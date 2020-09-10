@@ -1,0 +1,102 @@
+GET http://0.0.0.0:5000/api/v1/states/541bba6e-9543-4b33-8062-77ef26cd9778
+###
+GET http://0.0.0.0:5000/api/v1/states/
+###
+GET http://0.0.0.0:5000/api/v1/nop
+###
+GET http://0.0.0.0:5000/api/v1/status
+###
+GET http://0.0.0.0:5000/api/v1/stats
+###
+GET http://0.0.0.0:5000/api/v1/states/ HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/states/0e391e25-dd3a-45f4-bce3-4d1dea83f3c7 HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/states/not_an_id/cities/ HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/states/b5fc9076-6c20-44a7-ac9b-97de17112329/cities/ HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/states/10098698-bace-4bfb-8c0a-6bae0f7f5b8f/cities/ HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/states/2b9a4627-8a9e-4f32-a752-9a84fa7f4efd/cities/ HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/cities/45903748-fa39-4cd0-8a0b-c62bfe471702 HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/states/cities HTTP/1.1
+###
+POST http://0.0.0.0:5000/api/v1/states/2b9a4627-8a9e-4f32-a752-9a84fa7f4efd/cities HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Alexandria"
+}
+###
+PUT http://0.0.0.0:5000/api/v1/cities/a394b1f3-9ff3-4a20-8faa-f028f2a748f2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Bossier New york"
+}
+###
+GET http://0.0.0.0:5000/api/v1/cities/a394b1f3-9ff3-4a20-8faa-f028f2a748f2 HTTP/1.1
+###
+DELETE http://0.0.0.0:5000/api/v1/cities/a394b1f3-9ff3-4a20-8faa-f028f2a748f2
+###
+GET http://0.0.0.0:5000/api/v1/cities/a394b1f3-9ff3-4a20-8faa-f028f2a748f2 HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/amenities HTTP/1.1
+###
+POST http://0.0.0.0:5000/api/v1/amenities HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Panama"
+}
+###
+GET http://0.0.0.0:5000/api/v1/amenities/65932864-dad9-4232-9ffe-c9e33910b99b HTTP/1.1
+
+###
+DELETE http://0.0.0.0:5000/api/v1/amenities/65932864-dad9-4232-9ffe-c9e33910b99b HTTP/1.1
+###
+PUT http://0.0.0.0:5000/api/v1/amenities/13bff754-b7c8-43a0-94a8-03b265d92afc HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Bossier New york",
+    "location": "Nostradamous",
+    "owner": "Idont know"
+}
+###
+GET http://0.0.0.0:5000/api/v1/stats
+###
+# <string:place_id>/amenities
+GET http://0.0.0.0:5000/api/v1/places/effaabde-389f-4c04-bfd8-9747dcc6eaf8/amenities HTTP/1.1
+###
+# /api/v1/places/<string:place_id>/amenities/<string:amenity_id>
+DELETE http://0.0.0.0:5000/api/v1/places/effaabde-389f-4c04-bfd8-9747dcc6eaf8/amenities/de10a830-f7b3-4abd-9da6-5be820272e32 HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/users HTTP/1.1
+###
+GET http://0.0.0.0:5000/api/v1/users/fa44780d-ac48-41ab-9dd0-ac54a15755cf HTTP/1.1
+###
+DELETE http://0.0.0.0:5000/api/v1/users/f9b11370-f316-492c-92da-014d7bce7213 HTTP/1.1
+###
+POST http://0.0.0.0:5000/api/v1/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "aaaaaaaaasdasdasdasdasdsadas",
+    "location": "Nostradamous",
+    "owner": "Idont know",
+    "password": "123",
+    "email": "andres@hot.com"
+}
+###
+PUT http://0.0.0.0:5000/api/v1/users/fa44780d-ac48-41ab-9dd0-ac54a15755cf HTTP/1.1
+Content-Type: application/json
+
+{
+    "rename": 23
+}
+###
+GET http://0.0.0.0:5000/api/v1/users/fa44780d-ac48-41ab-9dd0-ac54a15755c=f HTTP/1.1
