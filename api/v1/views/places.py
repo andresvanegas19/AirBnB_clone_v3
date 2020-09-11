@@ -17,12 +17,12 @@ def get_places(city_id):
     """Count the whole information
     in the database with the newly added count()"""
     if request.method == 'GET':
-        dictionary = storage.all(Place)
         result = []
-        for key, value in dictionary.items():
-            if value.to_dict()['city_id'] == city_id:
-                result.append(value.to_dict())
-        return jsonify(result), 201
+        for clases in dictionary.values():
+            if clases.id == city_id:
+                result = [place.to_dict() for place in clases.places]
+                return jsonify(result), 201
+        abort(404)
     elif request.method == 'POST':
         content = request.get_json(silent=True)
         if type(content) == dict:
