@@ -15,13 +15,15 @@ def resource_bad_request(e):
 def get_places(city_id):
     """ Count the whole information in the database
         with the newly added count()"""
+
     if request.method == 'GET':
         dictionary = storage.all(Place)
         result = []
         for key, value in dictionary.items():
-            if value.to_dict()['city_id'] == city_id: 
+            if value.to_dict()['city_id'] == city_id:
                 result.append(value.to_dict())
         return jsonify(result), 201
+
     elif request.method == 'POST':
         content = request.get_json(silent=True)
         if type(content) == dict:
@@ -52,7 +54,7 @@ def get_places(city_id):
             # abort(400, description="fails cause yes")
 
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
-def place_by_id(place_id):             
+def place_by_id(place_id):
     """ Count the whole information in the database
     with the newly added count()"""
     result = storage.get(Place, place_id)
