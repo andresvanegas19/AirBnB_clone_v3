@@ -32,8 +32,7 @@ def get_cities_by_state(state_id):
         with the newly added count()"""
 
     if request.method == 'GET':
-        dictionary = storage.all(State)
-        for clases in dictionary.values():
+        for clases in storage.all(State).values():
             if state_id == clases.id:
                 result = [city.to_dict() for city in clases.cities]
                 return jsonify(result)
