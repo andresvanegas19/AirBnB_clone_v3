@@ -1,4 +1,4 @@
-B#!/usr/bin/python3
+#!/usr/bin/python3
 """ Script to route the request """
 from api.v1.views import app_views
 from models.place import Place
@@ -11,11 +11,11 @@ def resource_bad_request(e):
     return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=['GET', 'POST'], strict_slashes=False)
 def get_places(city_id):
-    """ Count the whole information in the database
-        with the newly added count()"""
-
+    """Count the whole information
+    in the database with the newly added count()"""
     if request.method == 'GET':
         dictionary = storage.all(Place)
         result = []
@@ -53,10 +53,12 @@ def get_places(city_id):
             abort(400, "Not a JSON")
             # abort(400, description="fails cause yes")
 
-@app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route('/places/<place_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def place_by_id(place_id):
-    """ Count the whole information in the database
-    with the newly added count()"""
+    """Count the whole information in
+    the database with the newly added count()"""
     result = storage.get(Place, place_id)
     if not result:
         abort(404)
@@ -76,8 +78,8 @@ def place_by_id(place_id):
             abort(400, "Not a JSON")
 
         for key, value in contents.items():
-            if key not in ('id', 'user_id', 'city_id','created_at', 'updated_at'):
+            if key not in ('id', 'user_id',
+                           'city_id', 'created_at', 'updated_at'):
                 setattr(result, key, value)
-
         storage.save()
         return jsonify(result.to_dict()), 200

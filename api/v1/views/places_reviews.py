@@ -5,11 +5,14 @@ from models.review import Review
 from models import storage
 from flask import jsonify, abort, request
 
+
 @app_views.errorhandler(400)
 def resource_bad_request(e):
     return jsonify({'error': str(e).replace('400 Bad Request: ', '')}), 400
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'], strict_slashes=False)
+
+@app_views.route('/places/<place_id>/reviews',
+                 methods=['GET', 'POST'], strict_slashes=False)
 def reviews(place_id):
     """ Count the whole information in the database
         with the newly added count()"""
@@ -50,7 +53,9 @@ def reviews(place_id):
             abort(400, "Not a JSON")
             # abort(400, description="fails cause yes")
 
-@app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route('/reviews/<review_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def reviews_by_id(review_id):
     """ Count the whole information in the database
     with the newly added count()"""
@@ -73,9 +78,9 @@ def reviews_by_id(review_id):
             abort(400, "Not a JSON")
 
         for key, value in contents.items():
-            if key not in ('id', 'user_id','place_id','created_at', 'updated_at'):
+            if key not in ('id', 'user_id',
+                           'place_id', 'created_at', 'updated_at'):
                 setattr(result, key, value)
 
         storage.save()
         return jsonify(result.to_dict()), 200
-
