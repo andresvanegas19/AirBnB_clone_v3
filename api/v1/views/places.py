@@ -13,7 +13,7 @@ def resource_bad_request(e):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET', 'POST'], strict_slashes=False)
-def get_places(city_id):
+def get_places_by_id(city_id):
     """Count the whole information
     in the database with the newly added count()"""
     if request.method == 'GET':
