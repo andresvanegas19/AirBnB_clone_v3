@@ -73,7 +73,6 @@ class FileStorage:
         """ A method to retrieve one object
         return: an object"""
         for objecto in self.__objects.keys():
-            # objeto = "City.5ce4caa5-6224-4278-b31b-1d826f35c953"
             if objecto.split('.')[1] == id:
                 return self.__objects[objecto]
         return None
@@ -86,7 +85,7 @@ class FileStorage:
         i = 0
         if cls:
             for objecto in self.__objects.values():
-                if cls == type(objecto):
+                if type(objecto) == cls:
                     i += 1
         else:
             for objecto in self.__objects.values():
