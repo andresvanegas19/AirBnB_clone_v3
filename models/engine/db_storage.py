@@ -80,6 +80,7 @@ class DBStorage:
         return: an object"""
         if cls:
             return self.__session.query(cls).filter_by(id=id).first()
+
         return None
 
 
@@ -88,11 +89,10 @@ class DBStorage:
         :return: Returns the number of objects in storage matching the given
         class name. If no name is passed, returns the count of all objects in
         storage."""
+        total = 0
         if cls:
             return self.__session.query(func.count(cls.id)).scalar()
         else:
-            total = 0
             for clase in classes.values():
                 total += self.__session.query(clase).count()
         return total
-
